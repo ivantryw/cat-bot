@@ -24,8 +24,7 @@ jobs:
           python-version: '3.11'
           
       - name: Install Dependencies
-        run: |
-          pip install discord.py firebase-admin
+        run: pip install -r requirements.txt
           
       - name: Run Cat Script
         env:
