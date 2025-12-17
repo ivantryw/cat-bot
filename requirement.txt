@@ -1,0 +1,3 @@
+discord.py
+firebase-admin
+importlib-metadata>=6.0.0
