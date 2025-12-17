@@ -1,27 +1,35 @@
-name: Send Daily Cat
+name: Hourly Cat Sender
 
 on:
   schedule:
-    - cron: '0 * * * *' # Runs every hour (at minute 0)
-    # Use '0 8 * * *' to run everyday at 8am UTC
+    # This acts as the "timer". 
+    # The syntax is standard Cron.
+    # '0 * * * *' = Run at minute 0 of every hour.
+    - cron: '0 * * * *'
+  
+  # Allows you to run it manually from the Actions tab for testing
+  workflow_dispatch:
 
 jobs:
-  run-bot:
+  send-cat:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v3
-      
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
           
       - name: Install Dependencies
-        run: pip install firebase-admin discord.py requests
-        
-      - name: Run Script
+        run: |
+          pip install discord.py firebase-admin
+          
+      - name: Run Cat Script
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
           DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
-        run: python bot.py
+        run: python daily_cat.py
