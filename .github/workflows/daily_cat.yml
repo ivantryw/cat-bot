@@ -1,0 +1,26 @@
+name: Send Daily Cat
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour (at minute 0)
+    # Use '0 8 * * *' to run everyday at 8am UTC
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Install Dependencies
+        run: pip install firebase-admin discord.py requests
+        
+      - name: Run Script
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+        run: python bot.py
