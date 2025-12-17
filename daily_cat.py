@@ -36,7 +36,9 @@ async def on_ready():
             random_cat = random.choice(cat_list)
             image_url = random_cat.get('url')
             if image_url:
-                await channel.send(f"Daily Cat Delivery! 😺\n{image_url}")
+                embed = discord.Embed(title="Hourly Cat Delivery! 😺", color=discord.Color.blue())
+                embed.set_image(url=image_url)
+                await channel.send(embed=embed)
                 print("Cat sent!")
             else:
                 print("Error: Document found but no URL.")
