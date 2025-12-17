@@ -16,7 +16,11 @@ db = firestore.client()
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 
-CHANNEL_ID = 123456789012345678 # Replace with your actual Channel ID
+try:
+    CHANNEL_ID = int(os.environ.get("DISCORD_CHANNEL_ID"))
+except (TypeError, ValueError):
+    print("Error: CHANNEL_ID is missing or not a number!")
+    exit(1) # Stop the script if we don't have an ID
 
 @client.event
 async def on_ready():
